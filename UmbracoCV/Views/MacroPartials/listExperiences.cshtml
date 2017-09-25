@@ -1,0 +1,40 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@using Umbraco.Core.Models
+@using Umbraco.Web
+
+
+@*
+    This snippet shows how simple it is to fetch only children of a certain Document Type.
+    
+    Be sure to change "IPublishedContent" below to match your needs, such as "TextPage" or "NewsItem".
+    (You can find the alias of your Document Type by editing it in the Settings section)
+*@
+
+@{  var selection = Model.Content.Descendants<Experience>().Where(x => x.IsVisible()).ToArray(); }
+
+@if (selection.Length > 0)
+{
+    <ul>
+        @foreach (var item in selection)
+        {
+            var item1 = @item.ThoiGianBatDau.ToString("MMM/yyyy") + " - " + @item.ThoiGianKetThuc.ToString("MMM/yyyy");
+            var item2 = @item.ThoiGianBatDau.ToString("MMM/yyyy") + " - NAY";
+            <div class="block">
+              <div>
+                <h3>@item.CongTy</h3>
+                <p>
+                    @if (@item.ThoiGianKetThuc.ToString("MMM/yyyy") != "Jan/0001") 
+                    {
+                        @item1
+                    }
+                    else
+                    {
+                        @item2
+                    }</p>
+              </div>
+              <p>@item.ViTri  </p>
+              <p>@item.ChiTietVeKinhNghiem         </p>
+            </div>
+        }
+    </ul>
+}

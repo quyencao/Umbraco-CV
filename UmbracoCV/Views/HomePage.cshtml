@@ -1,0 +1,113 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.HomePage>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+	Layout = null;
+	Int32 radioButtonId = CurrentPage.gioiTinh;
+}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>CV</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>@Umbraco.Field("hoVaTen")</h1>
+        <p>@Umbraco.Field("ngheNghiep")</p>
+      </div>
+      <div class="content">
+        <div class="main">
+          <div class="job-purpose">
+            <h3>Mục tiêu nghề nghiệp</h3>
+            <p>@Umbraco.Field("mucTieu")</p>
+          </div>
+          <div class="blocks">
+            <div class="title"> <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+              <h3>Học vấn</h3>
+              <p> </p>
+            </div>
+            @Umbraco.RenderMacro("listEducations")
+          </div>
+          <div class="blocks">
+            <div class="title"> <i class="fa fa-users" aria-hidden="true"></i>
+              <h3>Kinh ngiệm làm việc</h3>
+              <p> </p>
+            </div>
+            @Umbraco.RenderMacro("listExperiences")
+          </div>
+          <div class="blocks">
+            <div class="title"> <i class="fa fa-star" aria-hidden="true"></i>
+              <h3>Hoạt Động</h3>
+              <p> </p>
+            </div>
+            @Umbraco.RenderMacro("listActivities")
+          </div>
+          <div class="blocks">
+            <div class="title"> <i class="fa fa-file-text-o" aria-hidden="true"></i>
+              <h3>Chứng chỉ</h3>
+              <p> </p>
+            </div>
+            @Umbraco.RenderMacro("listCertifications")
+          </div>
+        </div>
+        <div class="sidebar">
+          <img src="@Umbraco.Media(Model.Content.GetPropertyValue("anhUngVien").ToString()).Url" /> 
+          <ul class="info">
+            <li><i class="fa fa-calendar" aria-hidden="true"> </i>
+              <p>@Umbraco.Field("ngaySinh", formatAsDate: true)</p>
+            </li>
+            <li><i class="fa fa-user" aria-hidden="true"> </i>
+              <p>
+                  @{
+                    var item1 = "Nam";
+                    var item2 = "Nữ";
+                  }
+                  @if(Model.Content.GetPropertyValue<int>("gioiTinh") == 19)
+                  {
+                    @item1
+                  } 
+                  else 
+                  {
+                    @item2
+                  }
+              </p>
+            </li>
+            <li><i class="fa fa-phone" aria-hidden="true"> </i>
+              <p>@Umbraco.Field("soDienThoai") </p>
+            </li>
+            <li><i class="fa fa-envelope" aria-hidden="true"> </i>
+              <p>@Umbraco.Field("diaChiEmail") </p>
+            </li>
+            <li><i class="fa fa-map-marker" aria-hidden="true"> </i>
+              <p>@Umbraco.Field("noiO")</p>
+            </li>
+            <li><i class="fa fa-info" aria-hidden="true"> </i>
+              <p>@Umbraco.Field("lienHe") </p>
+            </li>
+          </ul>
+          <div class="skills">
+            <div class="title">
+              <h3>Kỹ năng</h3>
+              <p></p>
+            </div>
+            @Umbraco.RenderMacro("listSkills")
+          </div>
+          <div class="interests">
+            <div class="title">
+              <h3>Sở thích</h3>
+              <p> </p>
+            </div>
+            <ul>
+              @Umbraco.RenderMacro("listInterests")
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
